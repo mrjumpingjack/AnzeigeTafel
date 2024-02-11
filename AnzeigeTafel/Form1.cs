@@ -55,7 +55,7 @@ namespace AnzeigeTafel
             }
             else
             {
-                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie siese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie diese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
 
                 if (m_result == DialogResult.Yes)
@@ -88,7 +88,7 @@ namespace AnzeigeTafel
             }
             else
             {
-                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie siese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie diese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
 
                 if (m_result == DialogResult.Yes)
@@ -134,7 +134,7 @@ namespace AnzeigeTafel
             }
             else
             {
-                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie siese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie diese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
 
                 if (m_result == DialogResult.Yes)
@@ -170,7 +170,7 @@ namespace AnzeigeTafel
                         {
                             foreach (DataGridViewRow row in dataGridView1.Rows)
                             {
-                                sw.WriteLine(row.Cells[0] + ";$%OVERHEAD$%:" + row.Cells[0].Style.BackColor.ToArgb());
+                                sw.WriteLine(row.Cells[0].Value.ToString() + ";$%OVERHEAD$%:" + row.Cells[0].Style.BackColor.ToArgb());
                             }
                             sw.Close();
                         }
@@ -183,7 +183,7 @@ namespace AnzeigeTafel
                     {
                         foreach (DataGridViewRow row in dataGridView1.Rows)
                         {
-                            sw.WriteLine(row.Cells[0] + ";$%OVERHEAD$%:" + row.Cells[0].Style.BackColor.ToArgb());
+                            sw.WriteLine(row.Cells[0].Value.ToString() + ";$%OVERHEAD$%:" + row.Cells[0].Style.BackColor.ToArgb());
                         }
                         sw.Close();
                     }
@@ -522,16 +522,6 @@ namespace AnzeigeTafel
         {
             if (!string.IsNullOrEmpty(data))
             {
-
-                // string[] lines = data.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-
-                //this.Invoke((MethodInvoker)delegate
-                //{
-                //    listView1.Items.Clear();
-                //});
-
-
-
                 this.Invoke((MethodInvoker)delegate
                 {
                     dataGridView1.Rows.Add(data);
@@ -539,19 +529,7 @@ namespace AnzeigeTafel
                     dataGridView1.Rows[dataGridView1.Rows.Count-1].Cells[0].Style.BackColor = backcolor;
 
                     dataGridView1.CurrentCell =null;
-
-                    //li.Text = data;
-                    //li.ForeColor = forecolor;
-                    //li.BackColor = backcolor;
-                    //li.SubItems.Add(data, forecolor, backcolor,li.Font);
-                    //listView1.Items.Add(li);
-                    //s1.Width = this.Width;
-
-                    //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0]..Height = 300;
-
                 });
-
-
 
             }
         }

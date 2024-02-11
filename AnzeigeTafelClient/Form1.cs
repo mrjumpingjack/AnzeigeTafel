@@ -27,7 +27,7 @@ namespace AnzeigeTafelClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           // SERVERADD = LocalIPAddress();
+            // SERVERADD = LocalIPAddress();
 
             saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -69,7 +69,7 @@ namespace AnzeigeTafelClient
             }
             catch (FileNotFoundException ex)
             {
-               // File.Create(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"/AnzeigeTafel/settings.conf");
+                // File.Create(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"/AnzeigeTafel/settings.conf");
 
                 using (StreamWriter sw = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"/AnzeigeTafel/settings.conf", false))
                 {
@@ -83,10 +83,10 @@ namespace AnzeigeTafelClient
 
                 MessageBox.Show("Einstellungen konnten nicht geladen werden. Die Standarteinstellungen werden geladen", "Einstellungen konnten nicht geladen werden.", MessageBoxButtons.OK);
             }
-            
+
 
         }
-        
+
 
         public String SERVERADDRESS;
 
@@ -289,11 +289,11 @@ namespace AnzeigeTafelClient
 
                         //if ((dataGridView1.CurrentCell.ColumnIndex == e.Cell.ColumnIndex) && dataGridView1.CurrentCell.RowIndex == e.Cell.RowIndex)
                         //{
-                            dataGridView1.CurrentCell.ReadOnly = true;
-                            int edit_index = dataGridView1.CurrentCell.RowIndex;
-                            Senden("$%INFO:_edit_at," + edit_index.ToString() + "," + dataGridView1.CurrentCell.Value.ToString() + ";$%OVERHEAD$%:" + panel1.BackColor.ToArgb() + Environment.NewLine);
+                        dataGridView1.CurrentCell.ReadOnly = true;
+                        int edit_index = dataGridView1.CurrentCell.RowIndex;
+                        Senden("$%INFO:_edit_at," + edit_index.ToString() + "," + dataGridView1.CurrentCell.Value.ToString() + ";$%OVERHEAD$%:" + panel1.BackColor.ToArgb() + Environment.NewLine);
 
-                            panel1.BackColor = last_panel_backcolor;
+                        panel1.BackColor = last_panel_backcolor;
 
                         //}
                     }
@@ -355,24 +355,25 @@ namespace AnzeigeTafelClient
 
         public void Senden_color(string data, int color)
         {
+            if (stream != null)
+            {
+                data = data + ";$%OVERHEAD$%:" + color + Environment.NewLine;
 
-
-            data = data + ";$%OVERHEAD$%:" + color+Environment.NewLine;
-
-
-            Byte[] b_data = System.Text.Encoding.UTF8.GetBytes(data);
-            stream.Write(b_data, 0, b_data.Length);
-
-
+                Byte[] b_data = System.Text.Encoding.UTF8.GetBytes(data);
+                stream.Write(b_data, 0, b_data.Length);
+            }
+            button1.Text = "Senden";
         }
 
 
         public void Senden(string data)
         {
-
-            Byte[] b_data = System.Text.Encoding.UTF8.GetBytes(data + Environment.NewLine);
-            stream.Write(b_data, 0, b_data.Length);
-
+            if (stream != null)
+            {
+                Byte[] b_data = System.Text.Encoding.UTF8.GetBytes(data + Environment.NewLine);
+                stream.Write(b_data, 0, b_data.Length);
+            }
+            button1.Text = "Senden";
         }
 
 
@@ -466,7 +467,7 @@ namespace AnzeigeTafelClient
             }
             else
             {
-                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie siese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie diese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
 
                 if (m_result == DialogResult.Yes)
@@ -498,7 +499,7 @@ namespace AnzeigeTafelClient
             }
             else
             {
-                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie siese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie diese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
 
                 if (m_result == DialogResult.Yes)
@@ -544,7 +545,7 @@ namespace AnzeigeTafelClient
             }
             else
             {
-                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie siese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult m_result = MessageBox.Show(this, "Die aktuell angezeigten Meldungen sind nicht gespeichert!" + Environment.NewLine + "Möchten Sie diese jetzt speichern?", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
 
                 if (m_result == DialogResult.Yes)
@@ -690,12 +691,9 @@ namespace AnzeigeTafelClient
 
         private void eintragBearbeitenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //int edit_index = dataGridView1.CurrentCell.RowIndex;
-
-            //Senden("$%INFO:_edit_at," + edit_index.ToString() + "," + MY_ADDRESS);
             last_panel_backcolor = panel1.BackColor;
             panel1.BackColor = dataGridView1.CurrentCell.Style.BackColor;
-
+            button1.Text = "Bearbeiten";
 
             dataGridView1.CurrentCell.ReadOnly = false;
             dataGridView1.BeginEdit(true);

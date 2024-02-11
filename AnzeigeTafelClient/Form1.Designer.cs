@@ -231,7 +231,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(91, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Hintergrundsfarbe";
+            this.label1.Text = "Hintergrundfarbe";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
